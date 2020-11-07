@@ -26,12 +26,10 @@ const casesTypeColors = {
   },
 };
 function CovidMapComponent({ selectedCountryInfo, countryNames }) {
-  // const [latLong, setlatLong] = useState({ lat: 34.80746, lng: -40.4796 });
   const [latLong, setlatLong] = useState([34.80746, -40.4796]);
 
   useEffect(() => {
     if (selectedCountryInfo) {
-      console.log("sdfsdfsdf");
       setlatLong([
         selectedCountryInfo.countryInfo.lat,
         selectedCountryInfo.countryInfo.long,
@@ -52,38 +50,40 @@ function CovidMapComponent({ selectedCountryInfo, countryNames }) {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {countryNames.map((country) => (
-            <Circle
-              center={[country.countryInfo.lat, country.countryInfo.long]}
-              color={casesTypeColors.cases.hex}
-              fillColor={casesTypeColors.cases.hex}
-              fillOpacity={0.4}
-              radius={
-                Math.sqrt(country.cases) * casesTypeColors.cases.multiplier
-              }
-            >
-              <Popup>
-                <div className="info-container">
-                  <div
-                    className="info-flag"
-                    style={{
-                      backgroundImage: `url(${country.countryInfo.flag})`,
-                    }}
-                  ></div>
-                  <div className="info-name">{country.country}</div>
-                  <div className="info-confirmed">
-                    Cases: {numeral(country.cases).format("0,0")}
+          {countryNames &&
+            countryNames.map((country) => (
+              <Circle
+                key={country.country}
+                center={[country.countryInfo.lat, country.countryInfo.long]}
+                color={casesTypeColors.cases.hex}
+                fillColor={casesTypeColors.cases.hex}
+                fillOpacity={0.4}
+                radius={
+                  Math.sqrt(country.cases) * casesTypeColors.cases.multiplier
+                }
+              >
+                <Popup>
+                  <div className="info-container">
+                    <div
+                      className="info-flag"
+                      style={{
+                        backgroundImage: `url(${country.countryInfo.flag})`,
+                      }}
+                    ></div>
+                    <div className="info-name">{country.country}</div>
+                    <div className="info-confirmed">
+                      Cases: {numeral(country.cases).format("0,0")}
+                    </div>
+                    <div className="info-recovered">
+                      Recovered: {numeral(country.recovered).format("0,0")}
+                    </div>
+                    <div className="info-deaths">
+                      Deaths: {numeral(country.deaths).format("0,0")}
+                    </div>
                   </div>
-                  <div className="info-recovered">
-                    Recovered: {numeral(country.recovered).format("0,0")}
-                  </div>
-                  <div className="info-deaths">
-                    Deaths: {numeral(country.deaths).format("0,0")}
-                  </div>
-                </div>
-              </Popup>
-            </Circle>
-          ))}
+                </Popup>
+              </Circle>
+            ))}
         </MapContainer>
       )}
     </div>
