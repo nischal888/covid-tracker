@@ -1,0 +1,30 @@
+.table {
+  margin-top: 20px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 400px;
+  color: #6a5d5d;
+  tr:nth-of-type(odd) {
+    background: #f3f2f8;
+  }
+  tr {
+    display: flex;
+    justify-content: space-between;
+  }
+  td {
+    padding: 0.5rem;
+  }
+}
+.casesByCountry {
+  margin-bottom: 25px;
+  &__title {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  &__icon {
+    font-size: 16px !important;
+    color: #a5a5a5;
+    margin-left: 3px;
+  }
+}
